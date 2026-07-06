@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans antialiased selection:bg-accent/30 selection:text-white;
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, rgba(177, 78, 255, 0.18), transparent 60%),
+      radial-gradient(900px 500px at 0% 30%, rgba(122, 31, 204, 0.10), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(177, 78, 255, 0.4);
+  }
+}
+
+@layer components {
+  .bento-card {
+    @apply relative overflow-hidden rounded-3xl bg-bg-card/70 border border-line ring-1 ring-line-soft backdrop-blur-xl;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease;
+  }
+  .bento-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(140deg, rgba(177, 78, 255, 0.35), rgba(255,255,255,0.04) 35%, rgba(255,255,255,0) 70%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.6;
+    transition: opacity 0.5s ease;
+  }
+  .bento-card:hover::before {
+    opacity: 1;
+  }
+  .bento-card:hover {
+    border-color: rgba(177, 78, 255, 0.25);
+  }
+
+  .grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.3 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs uppercase tracking-[0.18em] text-ink-dim bg-white/[0.03] border border-line-soft;
+  }
+
+  .pulse-dot {
+    @apply relative inline-block h-2 w-2 rounded-full bg-accent;
+    box-shadow: 0 0 0 0 rgba(177, 78, 255, 0.5);
+    animation: ring 2.4s cubic-bezier(0.66, 0, 0, 1) infinite;
+  }
+
+  @keyframes ring {
+    0% { box-shadow: 0 0 0 0 rgba(177, 78, 255, 0.55); }
+    70% { box-shadow: 0 0 0 14px rgba(177, 78, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(177, 78, 255, 0); }
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-tight bg-accent text-white shadow-glow hover:bg-accent-soft transition-all duration-300;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-tight border border-line-strong text-ink hover:border-accent hover:text-accent-soft transition-all duration-300;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(120deg, #FAFAFA 0%, #E0A8FF 45%, #B14EFF 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+
+.mesh-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  pointer-events: none;
+}
